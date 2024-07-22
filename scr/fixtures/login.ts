@@ -13,14 +13,14 @@ export const test = base.extend<TestFixtures>({
     const api = new API(request);
 
     
-    const loginResponse = await api.get('sign_in'); // Використовуйте правильний метод логіна
+    const loginResponse = await api.get('siginin', ''); 
     const token = loginResponse.token;
 
    
-    await use(new API(request, token));
+    await use(new API(request));
   },
   token: async ({ api }, use) => {
-    const loginResponse = await api.get('sign_in');
+    const loginResponse = await api.get('siginin', '');
     await use(loginResponse.token);
   }
 });
