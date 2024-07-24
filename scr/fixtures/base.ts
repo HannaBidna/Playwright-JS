@@ -1,23 +1,26 @@
 export * from '@playwright/test';
 
-import { test as base} from '@playwright/test';
-import { InOutPage } from '../pages/loginPage'; 
-import { DriversPage } from '../pages/driverPage';
-import { Steps } from '../pages/steps';
-//import { App } from '../pages/helpers/app';
-import { API } from '../pages/helpers/api';
+import { test as base } from '@playwright/test';
+import { LoginPage } from '../pages/pages/login-page';
+import { DriverPage } from '../pages/pages/driver-page';
+import { TruckPage } from '../pages/pages/trucks-page';
+import { Steps } from '../steps';
+import { API } from '../helpers/api';
+
 
 type MyFixtures = {
-    loginPage: InOutPage;
-    driversPage: DriversPage;
+    loginPage: LoginPage;
+    driverPage: DriverPage;
+    truckPage: TruckPage;
     steps: Steps;
-    //app: App;
     api: API;
-}
+};
 
 export const test = base.extend<MyFixtures>({
-    loginPage: async ({page}, use) => await use(new InOutPage(page)),
-    driversPage: async ({page}, use) => await use(new DriversPage(page)),
-    steps: async ({}, use) => await use(new Steps),
-    api: async({ page }, use) => await use (new API(page.request))
-});
+    loginPage: async ({ page }, use) => await use(new LoginPage(page)),
+    driverPage: async ({ page }, use) => await use(new DriverPage(page)),
+    truckPage: async ({ page }, use) => await use(new TruckPage(page)),
+    steps: async({}, use) => await use(new Steps()),
+    api: async({ page }, use) => await use(new API(page.request))
+    
+  });
