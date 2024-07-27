@@ -18,4 +18,8 @@ export abstract class Base {
     protected getByType(type: string) {
         return this.locator(`[type="${type}"]`);
     }
+
+    async navigate(url: string) {
+        await this.page.goto(url);
+    }
 }
