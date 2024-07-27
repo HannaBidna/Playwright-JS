@@ -10,6 +10,10 @@ export class TrucksPage extends BaseViewPage implements Navigatable {
         return 'fleet/trucks';
       }
 
+    async goto() {
+        await this.page.goto('/fleet/trucks');
+    }
+
     async waitForLoadState() {
         await this.page.waitForLoadState('networkidle');
       }
