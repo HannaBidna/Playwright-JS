@@ -3,8 +3,8 @@ import { expect } from '@playwright/test';
 
 const endpoints = {
   me: '/api/v1/dispatchers/me?',
-  drivers: '/api/v1/drivers?page=1',
-  trucks: '/api/v1/trucks?page=1',
+  drivers: '/api/v1/drivers?',
+  trucks: '/api/v1/trucks?',
   siginin: 'api/v1/sign-in'
 } as const;
 
