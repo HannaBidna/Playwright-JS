@@ -1,20 +1,11 @@
-import { expect } from  '@playwright/test';
-import { DriversPage } from '../../pages/driverPage';
-import { InOutPage} from '../../pages/loginPage';
-import { goto } from '../../pages/navigatable';
-import { step } from '../helpers/step';
+import { LoginSteps } from "../steps/login"
+import { SomeSteps } from "../steps/some-steps"
+import { applyMixins } from "../helpers/utils";
 
-export class Steps {
-  @step('Login user')
-  async login(loginPage: InOutPage, driversPage: DriversPage){
-    
-      await goto(loginPage)
+class Steps {};
 
-      await loginPage.login;
+interface Steps extends LoginSteps, SomeSteps {}
 
-      await goto(driversPage);
-      await expect(driversPage.header.userButton).toBeVisible();
-  
-    
-  }
-}
+applyMixins(Steps, [LoginSteps, SomeSteps]);
+
+export { Steps };
