@@ -1,23 +1,30 @@
-import { test as base } from '@playwright/test';
-import { InOutPage } from '../pages/loginPage';
+import { test as base, expect } from '@playwright/test';
 import { App } from '../pages/helpers/app';
-
-import { DotenvConfigOptions } from 'dotenv';
+import { User } from '../pages/helpers/users';
 
 type LoginFixtures = {
   app: App;
+  user: User;
 };
 
 export const test = base.extend<LoginFixtures>({
-  app: async ({ page }, use }) => {
+  user: async ({}, use, testInfo) => {
+    const user = testInfo.project.use as User;
+    await use(user);
+  },
+  app: async ({ page, user }, use) => {
     const app = new App(page);
     await app.loginPage.goto();
-    await app.loginPage.login(process.env.USER_EMAIL, process.env.USER_PASSWORD);
+    await app.loginPage.login(user.email, user.password);
     await use(app);
     await app.loginPage.logout();
   },
 });
 
-function use(app: App) {
-  throw new Error('Function not implemented.');
-}
+test.beforeEach(async ({ app }) => {
+  await app.loginPage.waitForLoadState();
+});
+
+test.afterEach(async ({ app }) => {
+  await app.loginPage.logout();
+});
